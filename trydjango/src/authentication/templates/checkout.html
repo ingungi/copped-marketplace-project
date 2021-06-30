@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Add Shipping Address</h1>
+<form action="" method="post">
+    {% csrf_token %}
+    <p>
+      Name: <input type="text" name="name" value="{{form.data.name}}" />
+      {{ form.name.errors }}
+    </p>
+    <p>
+      Address: <input type="text" name="address" value="{{form.data.address}}" />
+      {{ form.address.errors }}
+    </p>
+    <p>
+      City: <input type="text" name="city" value="{{form.city}}" />
+      {{ form.city.errors }}
+    </p>
+     <p>
+      Province: <input type="text" name="province" value="{{form.data.province}}" />
+      {{ form.province.errors }}
+    </p>
+    <p>
+      Postal Code: <input type="text" name="postal_code" value="{{form.data.postal_code}}" />
+      {{ form.postal_code.errors }}
+    </p>
+    <p>
+      <input type="submit" value="Proceed to Payment" style="background-color: #301934; border: none; color: white; padding: 15px 32px; text-align: center;text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer;"/>
+    </p>
+</form>
+</body>
+</html>
+{% endblock content %}

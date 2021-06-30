@@ -1,0 +1,56 @@
+@import url('https://fonts.googleapis.com/css?family=Bellota+Text|Montserrat&display=swap');
+
+:root{
+	--color-black: #000000;
+	--color-white: #FFFFFF;
+	--dark-purple: #301934;
+	--light-gray: #D3D3D3;
+	--bellota: 'Bellota Text', cursive;
+	--montserrat: 'Montserrat', sans-serif;
+}
+#listing-input {
+	font-family: var(--montserrat);
+
+}
+input[type=text], select, textarea{
+ 	width: 100%;
+	padding: 12px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+	resize: vertical;
+}
+label {
+  padding: 12px 12px 12px 0;
+  display: inline-block;
+}
+.btn {
+  background-color: var(--dark-purple);
+  color: white;
+  padding: 15px 20px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+}
+.col-25 {
+  float: left;
+  width: 25%;
+  margin-top: 6px;
+}
+.col-75 {
+  float: left;
+  width: 75%;
+  margin-top: 6px;
+}
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+@media screen and (max-width: 600px) {
+  .col-25, .col-75, input[type=submit] {
+    width: 100%;
+    margin-top: 0;
+  }
+}

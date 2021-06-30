@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card-deck font-montserrat">
+	<div class="card mt-2 mb-3 col-lg-8">
+		<!-- creates thumbnail-->
+		<h1 class="card-title title-header">MY BAG</h1>
+		<p class="card-text">
+			{% for citem in object.items.all %}
+			<img src= "{{ citem.item.image.url }}" height="100" width="100">
+			<b>{{ citem.item.designer }}</b>
+			<i>{{ citem.item.title }} </i>
+			${{ citem.item.price }}
+			Quantity: {{ citem.quantity }}<br>
+			{% endfor %}
+		</p>
+	</div>
+	<div class="card mt-2 mb-3 text col-lg-4">
+		<table><thead>
+		<th><h1 class="card-title">Total</h1></td><td><h1 class="card-title"> ${{ object.get_total_shipping }} </h1></th></thead>
+			<tbody>
+			<tr><td colspan="2">
+				<form action="{% url 'charge' %}" method="post">
+					{% csrf_token %}
+					<script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+							data-key="{{ key }}"
+							data-description="A Django Charge"
+							data-amount="{% widthratio object.get_total_shipping 1 100 %}"
+							data-locale="auto"></script>
+				</form>
+			</td></tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+</body>
+</html>
+{% endblock content %}

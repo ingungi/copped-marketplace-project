@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1 class="font-montserrat" style="text-align:center;"> Designer List</h1>
+<p style="text-align:center;">Please Choose one to view product</p>
+{% for designer in designers %}    
+<p style="text-align:center;"> {{ designer.letter }}</p> 
+    {% for item in designer.Items %}
+        <p style="text-align: center;">
+            <a style="color: black; text-align: center;" href="{% url 'designer' Brand=item.designer %}">{% ifchanged item.designer %}
+                {{ item.designer | title}}
+                {% endifchanged %}
+            </a></p>
+    {% endfor %}  
+{% endfor %}
+</body>
+</html>
+{% endblock content %}

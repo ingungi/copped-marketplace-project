@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+	<title> COPPED | User Dashboard
+	</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<!-- Font Awesome CDN -->
+	<script src="https://kit.fontawesome.com/dcb4ed4efa.js" crossorigin="anonymous"></script>
+	<!-- Bootstrap CDN -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<!-- jQuery library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<!-- My Custom Stylesheet -->
+	{% load static %}
+	<link rel="stylesheet" type="text/css" href="{% static "/stylesheet.css"  %}">
+
+	<link rel="stylesheet" type="text/css" href="{% static "/udash.css"  %}">
+</head>
+<body>
+<!-- header -->
+<header>
+	<div class="top-nav-bar">
+		<div class="search-box">
+			<div class="page-title">
+				<a href="{% url 'home' %}" class="site-title"><h1>COPPED</h1></a>
+			</div>
+		</div>
+		<div class="menu-bar">
+			<ul>
+				{% if user.is_authenticated %}
+				<li><a href="{% url 'dashboard' %}">
+					<i class="fas fa-user-circle"></i>
+				</a></li>
+				<li>
+					<a href="{% url 'room' user.username %}">
+						<i class="fas fa-comment-dots"></i>
+					</a>
+				</li>
+				<li>
+					<a href="{% url 'order-summary' %}">
+						<i class="fas fa-shopping-bag"></i>
+					</a>
+				</li>
+				<li><a href="{% url 'logout' %}">LOGOUT</a></li>
+				{% else %}
+				<li><a href="{% url 'login' %}" >LOGIN</a></li>
+				<li><a href="{% url 'signup' %}" >SIGNUP</a></li>
+				<li>
+					<a href="{% url 'cart_view' %}">
+						<i class="fas fa-shopping-bag"></i>
+					</a>
+				</li>
+				{% endif %}
+			</ul>
+		</div>
+	</div>
+	<div class="container-fluid p-0" >
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav mr-auto" id="navigation_bar">
+					<li class="nav-item">
+						<a class="nav-link" href="{% url 'home' %}">HOME</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{% url 'menswear' %}">MENSWEAR</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{% url 'womenswear' %}">WOMENSWEAR</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{% url 'footwear' %}">FOOTWEAR</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{% url 'accessories' %}">ACCESSORIES</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{% url 'designer_home' %}">DESIGNERS</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+	</div>
+</header>
+<!--when in user dash need to go home before you can browse products if in small screen-->
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-3">
+			<!-- Sidebar -->
+			<div class="dash-sidebar">
+				<ul class="list-group list-group-flush">
+					<li class="list-group-item list-group-item-action active"><a style="font-family: var(--montserrat); font-weight: bold; color:black;" href="{% url 'dashboard' %}">My Profile</a></li>
+					<li class="list-group-item list-group-item-action"><a style="font-family: var(--montserrat); font-weight: bold; color:black;" href="{% url 'past_orders'%}">My Orders</a></li>
+					<li class="list-group-item list-group-item-action"><a style="font-family: var(--montserrat); font-weight: bold; color:black;" href="{% url 'change_password' %}">Login and Security</a></li>
+					<li class="list-group-item list-group-item-action"><a style="font-family: var(--montserrat); font-weight: bold; color:black;" href="{% url 'add_listing' %}">Add a listing</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="col-lg-8">
+			<div class="dash-header">
+				<h1 style="font-family: var(--montserrat); font-weight: bold;" >My Profile</h1>
+			</div>
+			<br>
+			<div class="dash-content" id="whole_class" style="background-color: #f2f2f2; font-family: var(--montserrat);">
+				<h2 style="font-family: var(--montserrat); font-weight: bold;">Hi {{user.first_name }} {{user.last_name }}</h2>
+				<p> Email: {{user.email}} </p>
+				<p> username: {{user.username}} </p>
+				<p>Change your credentials</p>
+				<div class=" font-montserrat">{{ form.non_field_errors }}</div>
+				<form action="" method="POST">
+					{% csrf_token %}
+					<div class="form-group">
+						<label for="first-name">First Name</label>
+						<input type="text" id="first-name" name="first_name" value=" " placeholder="First" required>
+					</div>
+					<div class="form-group">
+						<label for="last-name">Last Name</label>
+						<input type="text" id="last-name" name="last_name" value=" " placeholder="Last" required>
+					</div>
+					<div class="form-group">
+						<label for="email">Email</label>
+						<input type="email" id="email" name="email" value=" " placeholder="name@example.com" required>
+					</div>
+					<input type="submit" class="btn btn-primary mb-2" value="Update Profile" />
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>

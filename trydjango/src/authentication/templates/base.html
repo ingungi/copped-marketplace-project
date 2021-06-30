@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+	<title>{% block title %} COPPED {% endblock %}
+	</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<!-- Font Awesome CDN -->
+	<script src="https://kit.fontawesome.com/dcb4ed4efa.js" crossorigin="anonymous"></script>
+	<!-- Bootstrap CDN -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<!-- jQuery library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<!-- My Custom Stylesheet -->
+	{% load static %}
+	<link rel="stylesheet" type="text/css" href="{% static "/stylesheet.css"  %}">
+</head>
+<body>
+<!-- header -->
+<header>
+	<div class="top-nav-bar">
+		<div class="search-box">
+			<div class="page-title">
+				<a href="{% url 'home' %}" class="site-title"><h1>COPPED</h1></a>
+			</div>
+		</div>
+		<div class="menu-bar">
+			<ul>
+				{% if user.is_authenticated %}
+				<li><a href="{% url 'dashboard' %}">
+					<i class="fas fa-user-circle"></i>
+				</a></li>
+				<li>
+					<a href="{% url 'room' user.username %}">
+						<i class="fas fa-comment-dots"></i>
+					</a>
+				</li>
+				<li>
+					<a href="{% url 'order-summary' %}">
+						<i class="fas fa-shopping-bag"></i>
+					</a>
+				</li>
+				<li><a href="{% url 'logout' %}">LOGOUT</a></li>
+				{% else %}
+				<li><a href="{% url 'login' %}" >LOGIN</a></li>
+				<li><a href="{% url 'signup' %}" >SIGNUP</a></li>
+				<li>
+					<a href="{% url 'cart_view' %}">
+						<i class="fas fa-shopping-bag"></i>
+					</a>
+				</li>
+				{% endif %}
+			</ul>
+		</div>
+	</div>
+	<div class="container-fluid p-0" >
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav mr-auto" id="navigation_bar">
+					<li class="nav-item">
+						<a class="nav-link" href="{% url 'home' %}">HOME</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{% url 'menswear' %}">MENSWEAR</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{% url 'womenswear' %}">WOMENSWEAR</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{% url 'footwear' %}">FOOTWEAR</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{% url 'accessories' %}">ACCESSORIES</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{% url 'designer_home' %}">DESIGNERS</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+	</div>
+</header>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+{% block content %}
+{% endblock content %}

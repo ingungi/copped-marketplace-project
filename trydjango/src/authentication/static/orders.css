@@ -1,0 +1,14 @@
+:root {
+	--light-gray: #D3D3D3;
+};
+
+#dash-content {
+	overflow: hidden;
+}
+#order-header {
+	
+}
+#an-order {
+	font-family: var(--montserrat);
+	padding: 5px;
+}

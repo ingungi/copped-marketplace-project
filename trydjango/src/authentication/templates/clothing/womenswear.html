@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block content %}
+		<p>
+			{% for Item_posting in womens_products %}
+			{% if forloop.first %}<div class="row">{% endif %}
+	
+	<div class="col-md-3">
+
+								<img src= "{{ Item_posting.image.url }}" height="300" width="300">
+								<p style="text-align:center; margin-top: 0px; font-weight: bold;">{{ Item_posting.designer | title}}</p>
+								<p style="text-align:center; margin-top: 0px;"><a style="color: black;" href="{% url 'product' Item=Item_posting.id %}">{{ Item_posting.title | title}}</a></p>
+								<p style="text-align:center; margin-top: 0px;">${{ Item_posting.price }}</p>
+			</div>
+		{% if forloop.counter|divisibleby:"4" %} </div><br><div class="row">{% endif %}
+		{% if forloop.last %}</div>{% endif %}
+		{% endfor %}
+			 </p>
+
+{% if womens_products.has_other_pages %}
+	<nav aria-label="Page navigation conatiner"></nav>
+	<ul class="pagination justify-content-center">
+		{% if womens_products.has_previous %}
+		<li><a style="background-color: #301934; border: none; color: white; padding: 15px 32px; text-align: center;text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer;" href="?page={{ womens_products.previous_page_number }}" class="page-link">&laquo; PREV </a></li>
+		{% endif %}
+		{% if womens_products.has_next %}
+		<li><a style="background-color: #301934; border: none; color: white; padding: 15px 32px; text-align: center;text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer;" href="?page={{ womens_products.next_page_number }}" class="page-link"> NEXT &raquo;</a></li>
+	 {% endif %}
+	</ul>
+	</nav>
+</div>
+{% endif %}
+
+ </body>
+</html>
+
+{% endblock content %}

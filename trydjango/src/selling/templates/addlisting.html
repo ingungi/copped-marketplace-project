@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+	<title> COPPED | User Dashboard
+	</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<!-- Font Awesome CDN -->
+	<script src="https://kit.fontawesome.com/dcb4ed4efa.js" crossorigin="anonymous"></script>
+	<!-- Bootstrap CDN -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<!-- jQuery library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<!-- My Custom Stylesheet -->
+	{% load static %}
+	<link rel="stylesheet" type="text/css" href="{% static '/stylesheet.css'  %}">
+	<link rel="stylesheet" type="text/css" href="{% static '/udash.css' %}">
+	<style type="text/css">
+		@import url('https://fonts.googleapis.com/css?family=Bellota+Text|Montserrat&display=swap');
+
+		:root{
+			--color-black: #000000;
+			--color-white: #FFFFFF;
+			--dark-purple: #301934;
+			--light-gray: #D3D3D3;
+			--bellota: 'Bellota Text', cursive;
+			--montserrat: 'Montserrat', sans-serif;
+		}
+		#listing-input {
+			font-family: var(--montserrat);
+
+		}
+		input[type=text], select, textarea{
+		 	width: 100%;
+			padding: 12px;
+			border: 1px solid #ccc;
+			border-radius: 4px;
+			box-sizing: border-box;
+			resize: vertical;
+		}
+		label {
+		  padding: 12px 12px 12px 0;
+		  display: inline-block;
+		}
+		.btn {
+		  background-color: var(--dark-purple);
+		  color: white;
+		  padding: 15px 20px;
+		  border: none;
+		  cursor: pointer;
+		  width: 100%;
+		  opacity: 0.9;
+		}
+		.col-25 {
+		  float: left;
+		  width: 25%;
+		  margin-top: 6px;
+		}
+		.col-75 {
+		  float: left;
+		  width: 75%;
+		  margin-top: 6px;
+		}
+		.row:after {
+		  content: "";
+		  display: table;
+		  clear: both;
+		}
+		@media screen and (max-width: 600px) {
+		  .col-25, .col-75, input[type=submit] {
+		    width: 100%;
+		    margin-top: 0;
+		  }
+		}
+	</style>
+</head>
+<body>
+<!-- header -->
+<header>
+	<div class="top-nav-bar">
+		<div class="search-box">
+			<div class="page-title">
+				<a href="{% url 'home' %}" class="site-title"><h1>COPPED</h1></a>
+			</div>
+		</div>
+		<div class="menu-bar">
+			<ul>
+				{% if user.is_authenticated %}
+				<li><a href="{% url 'dashboard' %}">
+					<i class="fas fa-user-circle"></i>
+				</a></li>
+				<li>
+					<a href="{% url 'room' user.username %}">
+						<i class="fas fa-comment-dots"></i>
+					</a>
+				</li>
+				<li>
+					<a href="{% url 'order-summary' %}">
+						<i class="fas fa-shopping-bag"></i>
+					</a>
+				</li>
+				<li><a href="{% url 'logout' %}">LOGOUT</a></li>
+
+				{% else %}
+				<li><a href="{% url 'login' %}" >LOGIN</a></li>
+				<li><a href="{% url 'signup' %}" >SIGNUP</a></li>
+				<li>
+					<a href="{% url 'cart_view' %}">
+						<i class="fas fa-shopping-bag"></i>
+					</a>
+				</li>
+				{% endif %}
+			</ul>
+		</div>
+	</div>
+	<div class="container-fluid p-0" >
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav mr-auto" id="navigation_bar">
+					<li class="nav-item">
+						<a class="nav-link" href="{% url 'home' %}">HOME</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{% url 'menswear' %}">MENSWEAR</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{% url 'womenswear' %}">WOMENSWEAR</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{% url 'footwear' %}">FOOTWEAR</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{% url 'accessories' %}">ACCESSORIES</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{% url 'designer_home' %}">DESIGNERS</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+	</div>
+</header>
+<br>
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-3">
+			<!-- Sidebar -->
+			<div class="dash-sidebar">
+				<ul class="list-group list-group-flush">
+					<li class="list-group-item list-group-item-action"><a style="font-family: var(--montserrat); font-weight: bold; color:black;" href="{% url 'dashboard' %}">My Profile</a></li>
+					<li class="list-group-item list-group-item-action"><a style="font-family: var(--montserrat); font-weight: bold; color:black;" href="{% url 'past_orders'%}">My Orders</a></li>
+					<li class="list-group-item list-group-item-action"><a style="font-family: var(--montserrat); font-weight: bold; color:black;" href="{% url 'change_password' %}">Login and Security</a></li>
+					<li class="list-group-item list-group-item-action active"><a style="font-family: var(--montserrat); font-weight: bold; color:black;" href="{% url 'add_listing' %}">Add a listing</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="col-lg-9" id="listing-input">
+			<div class="dash-header">
+				<h2 style="font-family: var(--montserrat); font-weight: bold;">Enter item details</h2>
+			</div>
+			<br>
+			<div class="container">
+				<form action="" method="post" enctype="multipart/form-data">
+					{% csrf_token %}
+					<p>Please post pictures of the item from different angles</p>
+					<div class="row">
+						<div>
+							Image: <input type="file" name="image" required/>
+							{{form.image.errors}}
+						</div>
+						<div>
+							Image2: <input type="file" name="image2" required/>
+							{{form.image2.errors}}
+						</div>
+						<div>
+							Image3: <input type="file" name="image3" required/>
+							{{form.image3.errors}}
+						</div>
+						<div>
+							Image4: <input type="file" name="image4" required/>
+							{{form.image4.errors}}
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-25">
+								<label for="price">Enter Item Price</label>
+						</div>
+						<div class="col-75">
+							<input type="number" id="price" name="price" placeholder="" required/>
+							{{form.price.errors}}
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-25">
+							<label for="quantity">Enter Item Quantity</label>
+						</div>
+						<div class="col-75">
+							<input type="number" id="quantity" name="quantity" required/>
+							{{form.quantity.errors}}
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-25">
+							<label for="descrip">Enter Item Description</label>
+						</div>
+						<div class="col-75">
+							<input type="text" id="descrip" name="descrip" required/>
+							{{form.quantity.errors}}
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-25">
+							<label for="type">Select item type (If womenswear enter: 1, If menswear enter: 2, If accessories enter: 3, If footwear enter: 4):</label>
+						</div>
+						<div class="col-75">
+							<input id="item_type" id="type" name="type" required/>
+							{{form.type.errors}}
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-25">
+							<label for="color">Color:</label>
+						</div>
+						<div class="col-75">
+							<input type="text" id="color" name="color" required/>
+							{{form.color.errors}}
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-25">
+							<label for="title">Title:</label>
+						</div>
+						<div class="col-75">
+							<input type="text" id="title" name="title" required/>
+							{{form.title.errors}}
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-25">
+							<label for="designer">Designer:</label>
+						</div>
+						<div class="col-75">
+							<input type="text" id="designer" name="designer" required/>
+							{{form.designer.errors}}
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-25">
+							<label for="size">Enter Item Size:</label>
+						</div>
+						<div class="col-75">
+							<input type="text" id="size" placeholder="" name="size" required/>
+							{{form.size.errors}}
+						</div>
+					</div>
+					<div class="row">
+						<input style="background-color: #301934; border: none; color: white; padding: 15px 32px; text-align: center;text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer;" type="submit" />
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>

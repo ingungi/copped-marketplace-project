@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+	<title> COPPED | User Dashboard
+	</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<!-- Font Awesome CDN -->
+	<script src="https://kit.fontawesome.com/dcb4ed4efa.js" crossorigin="anonymous"></script>
+	<!-- Bootstrap CDN -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<!-- jQuery library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<!-- My Custom Stylesheet -->
+	{% load static %}
+	<link rel="stylesheet" type="text/css" href="{% static "/stylesheet.css"  %}">
+	<link rel="stylesheet" type="text/css" href="{% static "/udash.css"  %}">
+	<style type="text/css">
+		:root{
+			--color-black: #000000;
+			--color-white: #FFFFFF;
+			--dark-purple: #301934;
+			--light-gray: #D3D3D3;
+			--bellota: 'Bellota Text', cursive;
+			--montserrat: 'Montserrat', sans-serif;
+		}
+		form {
+		  border: 3px
+		}
+
+		input[type=text], input[type=password] {
+		  width: 80%;
+		  padding: 12px 20px;
+		  margin: 8px 0;
+		  display: inline-block;
+		  border: 1px solid #ccc;
+		  box-sizing: border-box;
+		}
+
+
+		button {
+		  background-color: yellow;
+		  color: white;
+		  padding: 14px 20px;
+		  margin: 8px 0;
+		  border: none;
+		  cursor: pointer;
+		  width: 100%;
+		}
+	</style>
+</head>
+<body>
+<!-- header -->
+<header>
+	<div class="top-nav-bar">
+		<div class="search-box">
+			<div class="page-title">
+				<a href="{% url 'home' %}" class="site-title"><h1>COPPED</h1></a>
+			</div>
+		</div>
+		<div class="menu-bar">
+			<ul>
+				{% if user.is_authenticated %}
+				<li><a href="{% url 'dashboard' %}">
+					<i class="fas fa-user-circle"></i>
+				</a></li>
+				<li>
+					<a href="{% url 'room' user.username %}">
+						<i class="fas fa-comment-dots"></i>
+					</a>
+				</li>
+				<li>
+					<a href="{% url 'order-summary' %}">
+						<i class="fas fa-shopping-bag"></i>
+					</a>
+				</li>
+				<li><a href="{% url 'logout' %}">LOGOUT</a></li>
+				{% else %}
+				<li><a href="{% url 'login' %}" >LOGIN</a></li>
+				<li><a href="{% url 'signup' %}" >SIGNUP</a></li>
+				<li>
+					<a href="{% url 'cart_view' %}">
+						<i class="fas fa-shopping-bag"></i>
+					</a>
+				</li>
+				{% endif %}
+			</ul>
+		</div>
+	</div>
+	<div class="container-fluid p-0" >
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav mr-auto" id="navigation_bar">
+					<li class="nav-item">
+						<a class="nav-link" href="{% url 'home' %}">HOME</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{% url 'menswear' %}">MENSWEAR</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{% url 'womenswear' %}">WOMENSWEAR</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{% url 'footwear' %}">FOOTWEAR</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{% url 'accessories' %}">ACCESSORIES</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{% url 'designer_home' %}">DESIGNERS</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+	</div>
+</header>
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-3">
+			<!-- Sidebar -->
+			<div class="dash-sidebar">
+				<ul class="list-group list-group-flush">
+					<li class="list-group-item list-group-item-action"><a style="font-family: var(--montserrat); font-weight: bold; color:black;" href="{% url 'dashboard' %}">My Profile</a></li>
+					<li class="list-group-item list-group-item-action"><a style="font-family: var(--montserrat); font-weight: bold; color:black;" href="{% url 'past_orders'%}">My Orders</a></li>
+					<li class="list-group-item list-group-item-action active"><a style="font-family: var(--montserrat); font-weight: bold; color:black;" href="{% url 'change_password' %}">Login and Security</a></li>
+					<li class="list-group-item list-group-item-action"><a style="font-family: var(--montserrat); font-weight: bold; color:black;" href="{% url 'add_listing' %}">Add a listing</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="col-lg-8" id="login-formspace" >
+			<div class="dash-header">
+				<h2 style="font-family: var(--montserrat); font-weight: bold;">Login and Security</h2>
+			</div>
+			<br>
+			<div class="dash-content" style="background-color: #f2f2f2; font-family: var(--montserrat);">
+				<form action="" method="POST" enctype="multipart/form-data">
+					{% csrf_token %}
+					<label for="pass1">Enter new username:</label><br>
+					<input type="text" id="pass1" name="username" required/>
+					{{forms.username.errors}}<br>
+					<label for="pass2">Enter new password:</label><br>
+					<input type="password" id="pass2" name="password" required/>
+					{{ form.password.errors }}<br>
+					<label for="pass3">Confirm password:</label><br>
+					<input type="password" id="pass3" name="password_confirm" required/>
+					{{ form.password_confirm.errors }}<br>
+					<input type="submit" class="btn btn-primary mb-2" value="Update password"/>
+				</form>
+			</div>
+		</div>
+	</div>
+	</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,209 @@
+/* import fonts from Google Fonts*/
+@import url('https://fonts.googleapis.com/css?family=Bellota+Text|Montserrat&display=swap');
+
+:root{
+	--color-black: #000000;
+	--color-white: #FFFFFF;
+	--dark-purple: #301934;
+	--bellota: 'Bellota Text', cursive;
+	--montserrat: 'Montserrat', sans-serif;
+}
+
+.button {
+	background-color: #301934; 
+	border: none;
+	color: white;
+	padding: 15px 32px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+	margin: 4px 2px;
+	cursor: pointer;
+  }
+
+  
+.text-color {
+	color: var(--color-white);
+}
+.font-bellota {
+	font-family: var(--bellota);
+}
+.font-montserrat {
+	font-family: var(--montserrat);
+}
+header {
+	background-color: var(--dark-purple);
+	font-family: var(--montserrat);
+	text-align: left;
+	padding: 1px;
+}
+header .site-title {
+	color: white;
+	letter-spacing: 2px;
+}
+header .page-header {
+	margin: auto;
+}
+.header-links a {
+	color: white;
+}
+.top-nav-bar {
+	height: 57px;
+	top: 0;
+	position: sticky;
+	margin-bottom: 20px;
+	border-bottom: 3px;
+	z-index: 2;
+}
+.page-title {
+	height: 40px;
+	margin: 5px 10px;
+}
+
+p.dbrand{
+	margin-top: 12px;
+	font-weight: bold;
+}
+
+p.dtitle{
+	font-style: italic;
+}
+
+p.info{
+	margin-top: 30px;
+	font-size: 28px;
+}
+
+
+.form-control {
+	margin-top: 9px;
+	margin-left: 30px;
+	border: 1px !important;
+	border-top-left-radius: 20px !important; 
+	border-bottom-left-radius: 20px !important;
+	border-top-right-radius: 0px !important;
+	border-bottom-right-radius: 0px !important;
+	box-shadow: none !important;
+
+}
+.input-group-text {
+	border: 1px !important;
+	margin: 8.5px 10px 3px !important;
+	border-top-left-radius: 0px !important; 
+	border-bottom-left-radius: 0px !important;
+	border-top-right-radius: 20px !important;
+	border-bottom-right-radius: 20px !important;
+}
+.search-box {
+	display: inline-flex;
+	width: 60%;
+}
+.menu-bar {
+	width: 40%;
+	height:  57px;
+	float: right;
+}
+.menu-bar ul {
+	display: inline-flex;
+	float: right;
+}
+.menu-bar ul li {
+	border-left: 1px !important;
+	list-style-type: none;
+	padding: 15px 35px;
+	text-align: center;
+	cursor: pointer;
+}
+.menu-bar ul li a {
+	font-size: 16px;
+	font-weight: bold;
+	color: white;
+}
+.shopping-bag {
+	margin-right: 5px;
+}
+@media only screen and (max-width: 980px) {
+	.top-nav-bar {
+		height: 118px;
+	}
+	.search-box {
+		width: 100%;
+	}
+	.menu-bar {
+		width: 100%;
+	}
+	.menu-bar ul {
+		margin: 10px 0;
+		width: 100%;
+	}
+	.menu-bar ul li {
+		height: 57px;
+		width: 100%;
+	}
+}
+.slider {
+		height: 79%;
+		z-index: 2;
+		padding: 0 10px;
+}
+
+div ul li{
+	list-style-type: none;
+}
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #301934;
+  min-width: 160px;
+  z-index: 1;
+  overflow: hidden;
+  white-space:nowrap
+}
+.dropdown-content a{
+	color: #FFFFFF;
+}
+.dropdown:hover .dropdown-content {
+	display: block;
+}
+#price{
+	font-weight: bold;
+}
+.text{
+	display: block;
+}
+.btn-success{
+	background-color: #301934;
+}
+ul li img {
+	width: 20%;
+	height: 10%;
+	float: left;
+	border-radius: 0;
+	box-shadow: 0;
+	margin: 0px 10px;
+
+}
+th,td{
+    margin: 20px 0px;
+    width:100%;
+    padding: 10px;
+}
+.title-header{
+    border-style: solid;
+    border-color: #301934;
+    padding: 10px;
+
+}
+thead{
+    border-style: none none solid none;
+    border-color: #301934;
+}
+.btn-primary{
+	background-color: #301934;
+	padding: 15px 32px;
+
+}
+#whole_class{
+width:100%
+}

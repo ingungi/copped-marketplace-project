@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card-deck font-montserrat">
+	<div class="card mt-2 mb-3 col-lg-8">
+		<h1 class="card-title title-header">MY BAG</h1>
+		<p class="card-text">
+			{% if user.is_authenticated%}
+			{% for citem in object.items.all %}
+			<img src= "{{ citem.item.image.url }}" height="100" width="100">
+			<b>{{ citem.item.designer }}</b>
+			<i>{{ citem.item.title }} </i>
+			${{ citem.item.price }}
+
+			Quantity: {{ citem.quantity }}
+			<a href="{{ citem.item.get_remove_from_cart_url }}" style="background-color: #301934; border: none; color: white; padding: 15px 32px; text-align: center;text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer;">Remove From Cart</a> <br>
+			{% endfor %}
+		</p>
+		{% if messages %}
+		<ul class="messages">
+			{% for message in messages %}
+			<li{% if message.tags %} class="{{ message.tags }}"{% endif %}> {{ message }}</li>
+			{% endfor %}
+		</ul>
+		{% endif %}
+		{% else %}
+		<p>Please Login to add to cart</p>
+		{% endif %}
+	</div>
+	<div class="card mt-2 mb-3 text col-lg-4">
+		<table><thead>
+		<th><h1 class="card-title">Total</h1></td><td><h1 class="card-title"> &dollar;{{object.get_total_shipping}} </h1></th></thead>
+			<tbody>
+			<tr><td><h4>Sub-Total</h4></td><td><h4>&dollar;{{object.get_total}}</h4></td></tr>
+			<tr><td><h4>Delivery</h4></td><td><h4>&dollar;30</h4></td></tr>
+			<tr><td colspan="2"> <p><br/>We accept all credit cards via Stripe </p></td></tr>
+			<tr><td><a href="{% url 'checkout' %}" style="background-color: #301934; border: none; color: white; padding: 15px 32px; text-align: center;text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer;">Proceed to Checkout</a></td></tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+</body>
+</html>
+{% endblock content %}

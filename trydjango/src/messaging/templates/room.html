@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+	<title>COPPED | Chatroom with {{room_name}}
+	</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<!-- Font Awesome CDN -->
+	<script src="https://kit.fontawesome.com/dcb4ed4efa.js" crossorigin="anonymous"></script>
+	<!-- Bootstrap CDN -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<!-- jQuery library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<!-- My Custom Stylesheet -->
+	{% load static %}
+	<link rel="stylesheet" type="text/css" href="{% static "/stylesheet.css"  %}">
+	<style type="text/css">
+		@import url('https://fonts.googleapis.com/css?family=Bellota+Text|Montserrat&display=swap');
+
+		:root{
+			--color-black: #000000;
+			--color-white: #FFFFFF;
+			--dark-purple: #301934;
+			--light-gray: #D3D3D3;
+			--bellota: 'Bellota Text', cursive;
+			--montserrat: 'Montserrat', sans-serif;
+		}
+		#page-title {
+			font-family: var(--montserrat);
+		}
+		#chat-log {
+			height: 550px;
+			width: 100%;
+			overflow-x: hidden;
+			padding: 10px;
+			background-color: var(--light-gray);
+		}
+		#msg-entry {
+			display: flex;
+			font-family: var(--bellota);
+		}
+		#chat-message-input {
+			font-size: 1.2rem;
+			padding: 10px;
+			margin: 10px 5px;
+			appearance: none;
+			-webkit-appearance: none;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+			flex: 2;
+			width: 92%
+		}
+		#chat-message-submit {
+			font-size: 1.2rem;
+			padding: 10px;
+			margin: 10px 5px;
+			appearance: none;
+			-webkit-appearance: none;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+			width: 5%
+		}
+	</style>
+</head>
+<body>
+<!-- header -->
+<header>
+	<div class="top-nav-bar">
+		<div class="search-box">
+			<div class="page-title">
+				<a href="{% url 'home' %}" class="site-title"><h1>COPPED</h1></a>
+			</div>
+		</div>
+		<div class="menu-bar">
+			<ul>
+				{% if user.is_authenticated %}
+				<li><a href="{% url 'dashboard' %}">
+					<i class="fas fa-user-circle"></i>
+				</a></li>
+				<li>
+					<a href="{% url 'room' user.username %}">
+						<i class="fas fa-comment-dots"></i>
+					</a>
+				</li>
+				<li>
+					<a href="{% url 'order-summary' %}">
+						<i class="fas fa-shopping-bag"></i>
+					</a>
+				</li>
+				<li><a href="{% url 'logout' %}">LOGOUT</a></li>
+				{% else %}
+				<li><a href="{% url 'login' %}" >LOGIN</a></li>
+				<li><a href="{% url 'signup' %}" >SIGNUP</a></li>
+				<li>
+					<a href="{% url 'cart_view' %}">
+						<i class="fas fa-shopping-bag"></i>
+					</a>
+				</li>
+				{% endif %}
+			</ul>
+		</div>
+	</div>
+	<div class="container-fluid p-0" >
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav mr-auto" id="navigation_bar">
+					<li class="nav-item">
+						<a class="nav-link" href="{% url 'home' %}">HOME</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{% url 'menswear' %}">MENSWEAR</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{% url 'womenswear' %}">WOMENSWEAR</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{% url 'footwear' %}">FOOTWEAR</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{% url 'accessories' %}">ACCESSORIES</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{% url 'designer_home' %}">DESIGNERS</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+	</div>
+</header>
+<div id="test">
+	<h1 style="text-align: center;" class="font-bellota">Chatroom with {{room_name}} </h1>
+</div>
+<textarea id="chat-log" cols="100" rows="20"></textarea><br/>
+<input id="chat-message-input" type="text" autocomplete="off" autofocus placeholder="Enter message..." />
+<input id="chat-message-submit" type="button" value="Send"/>
+
+</body>
+<script>
+    var roomName = "{{ room_name }}";
+    document.getElementById('test').value +=roomName;
+
+    var chatSocket = new WebSocket(
+        'ws://' + window.location.host +
+        '/ws/messaging/' + roomName + '/');
+
+    chatSocket.onmessage = function(e) {
+        var data = JSON.parse(e.data);
+        var message = data['message'];
+
+        document.getElementById('chat-log').value += (message + '\n');
+    };
+
+    chatSocket.onclose = function(e) {
+        console.error('Chat socket closed unexpectedly');
+    };
+
+    document.getElementById('chat-message-input').focus();
+    document.getElementById('chat-message-input').onkeyup = function(e) {
+        if (e.keyCode === 13) {  // enter, return
+            document.getElementById('chat-message-submit').click();
+        }
+    };
+
+    document.getElementById('chat-message-submit').onclick = function(e) {
+        var messageInputDom = document.getElementById('chat-message-input');
+        var message = messageInputDom.value;
+        chatSocket.send(JSON.stringify({
+            'message': message
+        }));
+
+        messageInputDom.value = '';
+    };
+</script>
+</html>
